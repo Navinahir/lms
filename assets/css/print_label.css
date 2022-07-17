@@ -1,0 +1,51 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2 May, 2019, 10:49:26 AM
+    Author     : ghardik
+*/
+
+.main-div{
+    background-color: white;
+    width: 192px;
+}
+body{
+    font-family: sans-serif;
+}
+.border-left{
+    border-left: 1px solid black;
+}
+.border-top{
+    border-top: 1px solid black;
+}
+.border-bottom{
+    border-bottom: 1px solid black;
+}
+.border-right{
+    border-right: 1px solid black;
+}
+
+table td{
+    padding: 1px;
+    font-size: 8px;
+    /*font-weight: bolder;*/
+    font-smooth: auto;
+    font-smooth: 2em;
+}
+.qr-image{
+    width: 90px !important;
+}
+.price-td{
+    vertical-align: middle;
+    text-align: left;
+    width: 40% !important;
+    font-size: 20px;
+}
+.width-192{
+    width: 192px;
+}
+
+

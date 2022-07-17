@@ -1,0 +1,12 @@
+.media-left.media-middle img{
+    max-width: 40px !important;
+    max-height: 40px!important;
+}
+.container{width: 1200px;}
+.col-sm-6,.col-sm-12 { width:200px; float: left; padding-left: 10px; padding-right: 10px;}
+.media-left{width:40%;float:left;}
+.media-body{width:55%;float:left;   }
+.invoice-details {float: right;}
+body{
+   background: #fff; 
+}

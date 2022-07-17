@@ -1,0 +1,25 @@
+/*Dashboard quickbook css*/
+.quickbook {
+    text-align: center;
+}
+.quickbook img {
+    max-width: 100%;
+    width: 90%;
+}
+.quickbook .btn {
+    min-width: 170px;
+    background-color: #0c1d27;
+    margin-top: 15px;
+}
+.quickbook .btn:hover {
+    background-color: #1b2f3b;
+    color: #fff;
+}
+.quickbook span.sync-customer
+{
+    background-color: #2ca01c;
+}
+.quickbook span.sync-customer:hover {
+    background-color: #2ca01c;
+    color: #fff;
+}

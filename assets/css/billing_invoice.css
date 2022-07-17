@@ -1,0 +1,26 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18 Jan, 2019, 3:52:25 PM
+    Author     : ghardik
+*/
+
+.invoice-head td {
+    padding: 0 8px;
+}
+.container {
+    padding-top:30px;
+}
+.invoice-body{
+    background-color:transparent;
+}
+.invoice-thank{
+    margin-top: 60px;
+    padding: 5px;
+}
+address{
+    margin-top:15px;
+}

@@ -1,0 +1,74 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 1 Feb, 2019, 10:19:15 AM
+    Author     : ghardik
+*/
+
+#accordion {
+    margin-top: 15px;
+    margin: 0 10px 0 10px;
+    box-shadow: 4px 8px 10px #bdbdbd;
+}
+
+#accordion .panel {
+    border-radius: 0;
+    border: 0;
+    margin-top: 0px;
+}
+
+#accordion .panel-heading{
+    padding-top: 0px !important;
+    padding-bottom: 0px!important;
+}
+
+#accordion .panel-title a{
+    font-size: 15px;
+    text-align: left;
+}
+
+#accordion a {
+    display: block;
+    padding: 10px 15px;
+    border-bottom: 3px solid #009aff;
+    text-decoration: none;
+}
+#accordion .panel-heading a.collapsed:hover,
+#accordion .panel-heading a.collapsed:focus {
+    background-color: #2b84be;
+    color: white;
+    transition: all 0.2s ease-in;
+}
+#accordion .panel-heading a.collapsed:hover::before,
+#accordion .panel-heading a.collapsed:focus::before {
+    color: white;
+}
+#accordion .panel-heading {
+    padding: 0;
+    border-radius: 0px;
+    text-align: center;
+}
+#accordion .panel-heading a:not(.collapsed) {
+    color: white;
+    background-color: #1b2f3b;
+    transition: all 0.2s ease-in;
+}
+
+/* Add Indicator fontawesome icon to the left */
+#accordion .panel-heading .accordion-toggle::before {
+    font-family: 'FontAwesome';
+    content: '\f00d';
+    float: left;
+    color: white;
+    font-weight: lighter;
+    transform: rotate(0deg);
+    transition: all 0.2s ease-in;
+}
+#accordion .panel-heading .accordion-toggle.collapsed::before {
+    color: #444;
+    transform: rotate(-135deg);
+    transition: all 0.2s ease-in;
+}
