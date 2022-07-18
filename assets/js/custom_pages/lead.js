@@ -11,7 +11,7 @@ $(document).ready(function () {
  Intitalize Data Table
  ***********************************************************/
 
-$('.datatable-lead').dataTable({
+$('.datatable-basic').dataTable({
     autoWidth: false,
     processing: true,
     serverSide: true,
@@ -47,19 +47,13 @@ $('.datatable-lead').dataTable({
         {
             data: "note",
             visible: true,
-            render: function (data, type, full, meta) {
-                return '<textarea rows="5" style="width:100%;" readonly>'+full.note+'</textarea>';
-            }
         },
         {
             data: "action",
             render: function (data, type, full, meta) {
                 action = '';
-                action += '<a href="javascript:void(0);" class="btn btn-xs custom_dt_action_button transponder_view_btn" title="View" id="\'' + btoa(full.id) + '\'">View</a>';
-                if (user_type != 2) {
-                    action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/product/transponder/edit/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" title="Edit">Edit</a>';
-                    action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/product/transponder/delete/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this)" title="Delete">Delete</a>';
-                }
+                    action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/lead/edit/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" title="Edit">Edit</a>';
+                    action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/lead/delete/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this)" title="Delete">Delete</a>';
                 return action;
             },
             sortable: false,

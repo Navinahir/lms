@@ -16,7 +16,7 @@
         <div class="col-md-12">
             <?php $this->load->view('alert_view'); ?>
             <div class="panel panel-flat">
-                <table class="table datatable-lead">
+                <table class="table datatable-basic">
                     <thead>
                         <tr>
                             <th>Firstname</th>

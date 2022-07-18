@@ -138,38 +138,6 @@ if (isset($dataArr)) {
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-12 tool_details pl-0 pr-0">
-                            <?php
-                            if (isset($dataArr) && !empty($dataArr)) {
-                                if ($dataArr['tools'] != null) {
-                                    $tools = explode(',', $dataArr['tools']);
-
-                                    $tool_details = explode(':-:', $dataArr['tool_details']);
-                                    if (!empty($tools)) {
-                                        foreach ($tools as $k => $t) {
-                                            $key = array_search($t, array_column($toolArr, 'id'));
-                                            ?>
-                                            <div class="col-md-6 tool_div" id="div_<?php echo $t ?>">
-                                                <div class="panel panel-primary panel-bordered">
-                                                    <div class="panel-heading">
-                                                        <h6 class="panel-title"><?php echo $toolArr[$key]['equip_name'] . ' (' . $toolArr[$key]['manu_name'] . ')' ?></h6>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <input type="hidden" name="txt_tools[]" value="<?= $t ?>">
-                                                        <textarea placeholder="Place to add addtional details and instructions" name="tool_details[]" class="wysihtml5 wysihtml5-default form-control tool_textarea" rows="4"><?php echo (isset($tool_details[$k])) ? $tool_details[$k] : '' ?></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <?php
-                                        }
-                                    }
-                                }
-                            }
-                            ?>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-md-12 pl-xs-0 pr-xs-0">
                             <button type="submit" class="btn bg-teal custom_save_button">Save</button>

@@ -91,5 +91,80 @@ class Lead extends MY_Controller {
 		echo json_encode($final);
 	}
 
+	/**
+	 * Edit Transponder
+	 * @param $id - String
+	 * @return --
+	 * @author PAV [Last Edited : 03/02/2018]
+	 */
+	public function edit_lead($id = '') {
+		controller_validation();
+		$record_id = base64_decode($id);
+		$dataArr = $this->lead_model->get_all_details(TBL_LEAD, array('id' => $record_id))->row_array();
+//		$additional_Arr = $this->product_model->get_all_details(TBL_TRANSPONDER_ADDITIONAL, array('transponder_id' => $record_id, 'is_delete' => 0), array(array('field' => 'id', 'type' => 'asc')))->result_array();
+//		$companyArr = $this->product_model->get_all_details(TBL_COMPANY, array('is_delete' => 0), array(array('field' => 'name', 'type' => 'ASC')))->result_array();
+//		$modelArr = $this->product_model->get_all_details(TBL_MODEL, array('is_delete' => 0), array(array('field' => 'name', 'type' => 'ASC')))->result_array();
+//		$yearArr = $this->product_model->get_all_details(TBL_YEAR, array('is_delete' => 0), array(array('field' => 'name', 'type' => 'ASC')))->result_array();
+//		$itemArr = $this->inventory_model->get_item_details()->result_array();
+//		$trans_items = $this->product_model->get_all_details(TBL_TRANSPONDER_ITEMS, array('transponder_id' => $record_id))->result_array();
+//		$toolArr = $this->inventory_model->get_tool_details()->result_array();
+//		if (!empty($trans_items)) {
+//			$trans_itemsArr = array_column($trans_items, 'items_id');
+//		} else {
+//			$trans_itemsArr = array();
+//		}
+
+		$this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
+		$this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required');
+
+		if ($this->form_validation->run() == true) {
+			$updateArr = array(
+				'source' => htmlentities($this->input->post('source')),
+				'firstname' => htmlentities($this->input->post('firstname')),
+				'lastname' => htmlentities($this->input->post('lastname')),
+				'email' => htmlentities($this->input->post('email')),
+				'phone_number' => htmlentities($this->input->post('phone_number')),
+				'address' => htmlentities($this->input->post('address')),
+				'state' => htmlentities($this->input->post('state')),
+				'post_code' => htmlentities($this->input->post('post_code')),
+				'note' => htmlentities($this->input->post('note')),
+			);
+
+			$insert_id = $this->lead_model->insert_update('update', TBL_LEAD, $updateArr, array('id' => $record_id));
+
+			$this->session->set_flashdata('success', 'Data has been updated successfully.');
+			redirect('admin/lead/');
+		}
+		$data = array(
+			'title' => 'Edit Transponder',
+			'dataArr' => $dataArr,
+//			'companyArr' => $companyArr,
+//			'modelArr' => $modelArr,
+//			'yearArr' => $yearArr,
+//			'itemArr' => $itemArr,
+//			'trans_items' => array_column($trans_items, 'items_id'),
+//			'additional_Arr' => $additional_Arr,
+//			'toolArr' => $toolArr,
+			'record_id' => $record_id
+		);
+		$this->template->load('default', 'admin/lead/lead_add', $data);
+	}
+
+	/**
+	 * Delete Transponder
+	 * @param $id - String
+	 * @return --
+	 * @author PAV [Last Edited : 03/02/2018]
+	 */
+	public function delete_lead($id = '') {
+//		controller_validation();
+		$record_id = base64_decode($id);
+		$this->lead_model->insert_update('delete', TBL_LEAD, '', array('id' => $record_id));
+		$this->session->set_flashdata('error', 'Data data has been deleted successfully.');
+		redirect('admin/lead/');
+	}
+
+
 
 }
