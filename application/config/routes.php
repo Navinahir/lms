@@ -239,6 +239,11 @@ $route['admin/product/transponder/edit/(:any)'] = 'admin/product/edit_transponde
 $route['admin/product/transponder/delete/(:any)'] = 'admin/product/delete_transponder/$1';
 $route['admin/product/transponder/bulk_edit'] = 'admin/product/bulk_edit_transponder';
 
+// Lead
+$route['admin/lead/add'] = 'admin/lead/add_lead';
+$route['admin/lead/edit/(:any)'] = 'admin/lead/edit_lead/$1';
+$route['admin/lead/delete/(:any)'] = 'admin/lead/delete_lead/$1';
+
 // Administrator
 $route['admin/product/make'] = 'admin/product/manage_make';
 $route['admin/product/make/delete/(:any)'] = 'admin/product/delete_make/$1';

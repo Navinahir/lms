@@ -152,6 +152,7 @@
                             <div class="category-content no-padding">
                                 <ul class="navigation navigation-main navigation-accordion">
                                     <li class="<?php echo ($class == 'dashboard') ? 'active' : '' ?>"><a href="<?php echo site_url('admin/dashboard'); ?>"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+                                    <li class="<?php echo ($class == 'lead' && ($action == 'display_lead' || $action == 'add_lead' || $action == 'edit_lead')) ? 'active' : ''; ?>"><a href="<?php echo site_url('admin/lead/'); ?>"><i class="icon-meter2"></i> <span>Lead Management</span></a></li>
                                     <li class="<?php echo ($class == 'product' && ($action == 'display_transponder' || $action == 'add_transponder' || $action == 'edit_transponder')) ? 'active' : ''; ?>"><a href="<?php echo site_url('admin/product/transponder'); ?>"><i class="icon-meter2"></i> <span>Lead Management</span></a></li>
                                    <!--  <li class="<?php echo ($class == 'product' && ($action == 'display_transponder' || $action == 'add_transponder' || $action == 'edit_transponder')) ? 'active' : ''; ?>"><a href="<?php echo site_url('admin/product/transponder'); ?>"><i class="icon-meter2"></i> <span>Project Management</span></a></li> -->
                                         <li class="<?php echo ($class == 'users') ? 'active' : ''; ?>">
