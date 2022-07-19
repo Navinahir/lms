@@ -244,6 +244,9 @@ $route['admin/lead/add'] = 'admin/lead/add_lead';
 $route['admin/lead/edit/(:any)'] = 'admin/lead/edit_lead/$1';
 $route['admin/lead/delete/(:any)'] = 'admin/lead/delete_lead/$1';
 
+$route['admin/users/add'] = 'admin/users/add_users';
+$route['admin/users/edit/(:any)'] = 'admin/users/edit_users/$1';
+
 // Administrator
 $route['admin/product/make'] = 'admin/product/manage_make';
 $route['admin/product/make/delete/(:any)'] = 'admin/product/delete_make/$1';

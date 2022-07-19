@@ -56,59 +56,10 @@ $('.datatable-basic').dataTable({
             visible: true,
         },
         {
-            data: "business_name",
-            visible: true,
-        },
-        {
-            data: "primary_account_holder",
-            visible: false,
-            render: function (data, type, full, meta) {
-                if (data) {
-                    return data;
-                } else {
-                    return '---';
-                }
-            }
-        },
-        {
-            data: "package_name",
-            visible: true,
-            sortable: false,
-            render: function (data, type, full, meta) {
-                if (data) {
-                    return data + ': $' + full.price;
-                } else {
-                    return '---';
-                }
-            }
-        },
-        {
             data: "modified_date",
             visible: true,
         },
-        {
-            data: "total_users_under_account",
-            visible: true,
-            sortable: false,
-            render: function (data, type, full, meta) {
-                var currentCell = $('.datatable-basic').DataTable().cells({"row": meta.row, "column": meta.col}).nodes(0);
 
-                $.ajax({
-                    type: 'POST',
-                    url: site_url + 'admin/users/get_total_users_under_account',
-                    data: {
-                        user_id: full.id,
-                        package_id: full.package_id
-                    }
-                }).done(function (data) {
-                    data = jQuery.parseJSON(data);
-                    var active_users = parseFloat(data.active_users_count) + 1;
-                    $(currentCell).text('Total User(s): ' + active_users + ' / ' + data.total_users_count);
-                });
-
-                return null;
-            }
-        },
         {
             data: "action",
             render: function (data, type, full, meta) {
@@ -116,11 +67,12 @@ $('.datatable-basic').dataTable({
                 //action += '<a href="javascript:void(0);" class="btn btn-xs custom_dt_action_button menu_cat_view_btn" title="View" id="' + btoa(full.id) + '">View</a>';
                 if (full.status == 'block') {
                     action += '<a href="' + site_url + 'admin/users/action/active/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this,\'Reactivate\')" title="Reactivate">Reactivate</a>';
-                } else if (full.status == 'active') {
-                    action += '<a href="' + site_url + 'admin/users/account/review/' + btoa(full.id) + '" target="_blank" class="btn custom_dt_action_button btn-xs" title="Review Account">Review</a>';
-                    action += '<a href="' + site_url + 'admin/users/action/block/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this,\'Pause\')" title="Pause">Pause</a>';
                 }
-                action += '<a href="' + site_url + 'admin/users/view/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" title="View">View</a>';
+                // else if (full.status == 'active') {
+                //     action += '<a href="' + site_url + 'admin/users/account/review/' + btoa(full.id) + '" target="_blank" class="btn custom_dt_action_button btn-xs" title="Review Account">Review</a>';
+                //     action += '<a href="' + site_url + 'admin/users/action/block/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this,\'Pause\')" title="Pause">Pause</a>';
+                // }
+                action += '<a href="' + site_url + 'admin/users/edit/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" title="View">Edit</a>';
 
                 action += '<a data-userid="' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_delete_alert(this)" title="Delete">Delete</a>';
 //                action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/users/delete/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_delete_alert(this)" title="Delete">Delete</a>';
@@ -148,7 +100,8 @@ $('.dataTables_length select').select2({
     width: 'auto'
 });
 $('.dataTables_filter input[type=search]').attr('placeholder', 'Type to filter...');
-
+var add_button = '<div class="text-right add_action_button"><a href="' + site_url + 'admin/users/add" class="btn bg-teal-400 btn-labeled custom_add_button  mt-2"><b><i class="icon-plus-circle2"></i></b> Add Users</a></div>';
+$('.datatable-header').append(add_button);
 //-- Sweet Alert Delete Popup
 function confirm_alert(e, action) {
     swal({

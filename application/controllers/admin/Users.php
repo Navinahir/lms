@@ -6,9 +6,107 @@ class Users extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(array('admin/users_model', 'admin/subscription_model'));
+        $this->load->model(array('admin/users_model', 'admin/roles_model'));
         controller_validation();
     }
+
+	/**
+	 * Add Lead
+	 * @param --
+	 * @return --
+	 * @author PAV [Last Edited : 03/02/2018]
+	 */
+	public function add_users() {
+		$data['title'] = 'Admin | Add Users';
+		$data['rolesArr'] = $rolesArr = $this->roles_model->get_all_details(TBL_ROLES, array('is_delete' => 0))->result_array();
+
+		$this->form_validation->set_rules('first_name', 'Firstname', 'trim|required');
+		$this->form_validation->set_rules('last_name', 'Lastname', 'trim|required');
+		$this->form_validation->set_rules('username', 'Username', 'trim|required');
+		$this->form_validation->set_rules('email_id', 'Email', 'trim|required');
+		if ($this->form_validation->run() == true) {
+			$insertArr = array(
+				'user_role' => htmlentities($this->input->post('user_role')),
+				'first_name' => htmlentities($this->input->post('first_name')),
+				'last_name' => htmlentities($this->input->post('last_name')),
+				'username' => htmlentities($this->input->post('username')),
+				'email_id' => htmlentities($this->input->post('email_id')),
+				'contact_number' => htmlentities($this->input->post('contact_number')),
+				'address' => htmlentities($this->input->post('address')),
+				'state_id' => htmlentities($this->input->post('state_id')),
+				'zip_code' => htmlentities($this->input->post('zip_code'))
+			);
+			if ($this->input->post('password') != '' && ($this->input->post('password') == $this->input->post('cpassword'))) {
+				$password_encrypt_key = bin2hex(openssl_random_pseudo_bytes(6, $cstrong));
+				$algo = $password_encrypt_key . $this->input->post('password') . $password_encrypt_key;
+				$encrypted_pass = hash('sha256', $algo);
+				$insertArr['password'] = $encrypted_pass;
+				$insertArr['password_encrypt_key'] = $password_encrypt_key;
+			}
+			$insert_id = $this->users_model->insert_update('insert', TBL_USERS, $insertArr);
+
+			if ($insert_id > 0) {
+				$this->session->set_flashdata('success', 'Data has been added successfully.');
+			} else {
+				$this->session->set_flashdata('error', 'Something went wrong! Please try again.');
+			}
+			redirect('admin/users/');
+		}
+
+		$data = array(
+			'title' => 'Edit Users',
+			'rolesArr' => $rolesArr);
+
+		$this->template->load('default', 'admin/users/users_add', $data);
+	}
+
+	/**
+	 * Edit Transponder
+	 * @param $id - String
+	 * @return --
+	 * @author PAV [Last Edited : 03/02/2018]
+	 */
+	public function edit_users($id = '') {
+//		controller_validation();
+		$record_id = base64_decode($id);
+		$dataArr = $this->users_model->get_all_details(TBL_USERS, array('id' => $record_id))->row_array();
+		$data['rolesArr'] = $rolesArr = $this->roles_model->get_all_details(TBL_ROLES, array('is_delete' => 0))->result_array();
+		$this->form_validation->set_rules('first_name', 'Firstname', 'trim|required');
+		$this->form_validation->set_rules('last_name', 'Lastname', 'trim|required');
+		$this->form_validation->set_rules('username', 'Username', 'trim|required');
+		$this->form_validation->set_rules('email_id', 'Email', 'trim|required');
+		if ($this->form_validation->run() == true) {
+			$updateArr = array(
+				'user_role' => htmlentities($this->input->post('user_role')),
+				'first_name' => htmlentities($this->input->post('first_name')),
+				'last_name' => htmlentities($this->input->post('last_name')),
+				'username' => htmlentities($this->input->post('username')),
+				'email_id' => htmlentities($this->input->post('email_id')),
+				'contact_number' => htmlentities($this->input->post('contact_number')),
+				'address' => htmlentities($this->input->post('address')),
+				'state_id' => htmlentities($this->input->post('state_id')),
+				'zip_code' => htmlentities($this->input->post('zip_code'))
+			);
+			if ($this->input->post('password') != '' && ($this->input->post('password') == $this->input->post('cpassword'))) {
+				$password_encrypt_key = bin2hex(openssl_random_pseudo_bytes(6, $cstrong));
+				$algo = $password_encrypt_key . $this->input->post('password') . $password_encrypt_key;
+				$encrypted_pass = hash('sha256', $algo);
+				$updateArr['password'] = $encrypted_pass;
+				$updateArr['password_encrypt_key'] = $password_encrypt_key;
+			}
+			$this->users_model->insert_update('update', TBL_USERS, $updateArr, array('id' => $record_id));
+
+			$this->session->set_flashdata('success', 'Data has been updated successfully.');
+			redirect('admin/users/');
+		}
+		$data = array(
+			'title' => 'Edit Transponder',
+			'dataArr' => $dataArr,
+			'rolesArr' => $rolesArr,
+			'record_id' => $record_id
+		);
+		$this->template->load('default', 'admin/users/users_add', $data);
+	}
 
     /**
      * Display Users

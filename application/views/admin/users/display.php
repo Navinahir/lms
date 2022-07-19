@@ -20,11 +20,7 @@
                             <th>Full Name</th>
                             <th>User Name</th>
                             <th>Email ID</th>
-                            <th>Business Name</th>
-                            <th>Primary Account Holder</th>
-                            <th>Current Subscription</th>
                             <th>Last Edited</th>
-                            <th>Total User Under Account</th>
                             <th>Action</th>
                             <th></th>
                         </tr>
