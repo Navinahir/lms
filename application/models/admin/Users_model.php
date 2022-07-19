@@ -81,12 +81,12 @@ class Users_model extends MY_Model {
      * @author HPA [Last Edited : 03/02/2018]
      */
     public function get_ajax_data($type, $wh = null) {
-        $columns = ['u.id', 'u.status', 'u.full_name', 'u.username', 'u.email_id', 'u.business_name', 'bu.full_name', 'p.name', 'u.modified_date', 'u.is_delete'];
+        $columns = ['u.id', 'u.status', 'u.full_name', 'u.username', 'u.email_id', 'u.business_name', 'bu.full_name',  'u.modified_date', 'u.is_delete'];
         $keyword = $this->input->get('search');
-        $this->db->select('u.*,r.role_name, bu.full_name as primary_account_holder,p.name as package_name,p.price');
+        $this->db->select('u.*,r.role_name');
         $this->db->where(array(
             'u.is_delete' => 0,
-            'u.user_role' => 4,
+//            'u.user_role' => 4,
         ));
         if (!is_null($wh)) {
             $this->db->where($wh);
@@ -97,8 +97,6 @@ class Users_model extends MY_Model {
         }
         $this->db->join(TBL_ROLES . ' as r', 'u.user_role = r.id', 'left');
         $this->db->join(TBL_USERS . ' as bu', 'u.business_user_id = bu.id', 'left');
-        $this->db->join(TBL_PACKAGES . ' as p', 'u.package_id = p.id', 'left');
-
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
 
         if ($type == 'count') {
@@ -437,10 +435,10 @@ class Users_model extends MY_Model {
      * @return boolean
      */
     public function get_date_format($user_id) {
-        $this->db->select('d.*,u.id as uid');
+        $this->db->select('*');
         $this->db->from(TBL_USERS . ' u');
         $this->db->where(['u.id' => $user_id]);
-        $this->db->join(TBL_DATE_FORMAT . ' d', 'd.id = u.date_format_id', 'left');
+//        $this->db->join(TBL_DATE_FORMAT . ' d', 'd.id = u.date_format_id', 'left');
         $res = $this->db->get();
         return $res->row_array();
     }
@@ -452,10 +450,10 @@ class Users_model extends MY_Model {
      * @return boolean
      */
     public function get_currency($user_id) {
-        $this->db->select('c.*,u.id as uid');
+        $this->db->select('*');
         $this->db->from(TBL_USERS . ' u');
         $this->db->where(['u.id' => $user_id]);
-        $this->db->join(TBL_CURRENCY . ' c', 'c.id = u.currency_id', 'left');
+//        $this->db->join(TBL_CURRENCY . ' c', 'c.id = u.currency_id', 'left');
         $res = $this->db->get();
         return $res->row_array();
     }

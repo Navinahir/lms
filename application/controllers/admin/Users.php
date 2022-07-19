@@ -107,7 +107,19 @@ class Users extends MY_Controller {
 		);
 		$this->template->load('default', 'admin/users/users_add', $data);
 	}
-
+	/**
+	 * Delete Transponder
+	 * @param $id - String
+	 * @return --
+	 * @author PAV [Last Edited : 03/02/2018]
+	 */
+	public function delete_users($id = '') {
+//		controller_validation();
+		$record_id = base64_decode($id);
+		$this->users_model->insert_update('delete', TBL_USERS, '', array('id' => $record_id));
+		$this->session->set_flashdata('error', 'Data data has been deleted successfully.');
+		redirect('admin/users/');
+	}
     /**
      * Display Users
      * @param  : ---

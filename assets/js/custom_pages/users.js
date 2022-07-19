@@ -64,18 +64,8 @@ $('.datatable-basic').dataTable({
             data: "action",
             render: function (data, type, full, meta) {
                 action = '';
-                //action += '<a href="javascript:void(0);" class="btn btn-xs custom_dt_action_button menu_cat_view_btn" title="View" id="' + btoa(full.id) + '">View</a>';
-                if (full.status == 'block') {
-                    action += '<a href="' + site_url + 'admin/users/action/active/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this,\'Reactivate\')" title="Reactivate">Reactivate</a>';
-                }
-                // else if (full.status == 'active') {
-                //     action += '<a href="' + site_url + 'admin/users/account/review/' + btoa(full.id) + '" target="_blank" class="btn custom_dt_action_button btn-xs" title="Review Account">Review</a>';
-                //     action += '<a href="' + site_url + 'admin/users/action/block/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this,\'Pause\')" title="Pause">Pause</a>';
-                // }
                 action += '<a href="' + site_url + 'admin/users/edit/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" title="View">Edit</a>';
-
-                action += '<a data-userid="' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_delete_alert(this)" title="Delete">Delete</a>';
-//                action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/users/delete/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_delete_alert(this)" title="Delete">Delete</a>';
+                action += '<a href="' + site_url + 'admin/users/delete/' + btoa(full.id) + '" data-userid="' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this)" title="Delete">Delete</a>';
                 return action;
             },
             sortable: false,
@@ -106,11 +96,11 @@ $('.datatable-header').append(add_button);
 function confirm_alert(e, action) {
     swal({
         title: "Are you sure?",
-        text: "You would like to " + action + " this User!",
+        text: "You will not be able to recover this!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#FF7043",
-        confirmButtonText: "Yes, " + action + " it!"
+        confirmButtonText: "Yes, delete it!"
     }, function (isConfirm) {
         if (isConfirm) {
             window.location.href = $(e).attr('href');
