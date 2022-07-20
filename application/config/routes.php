@@ -248,6 +248,10 @@ $route['admin/users/add'] = 'admin/users/add_users';
 $route['admin/users/edit/(:any)'] = 'admin/users/edit_users/$1';
 $route['admin/users/delete/(:any)'] = 'admin/users/delete_users/$1';
 
+$route['admin/products/add'] = 'admin/products/add_products';
+$route['admin/products/edit/(:any)'] = 'admin/products/edit_products/$1';
+$route['admin/products/delete/(:any)'] = 'admin/products/delete_products/$1';
+
 // Administrator
 $route['admin/product/make'] = 'admin/product/manage_make';
 $route['admin/product/make/delete/(:any)'] = 'admin/product/delete_make/$1';

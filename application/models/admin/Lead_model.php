@@ -10,43 +10,23 @@ class Lead_model extends MY_Model {
      * @author PAV [Last Edited : 03/02/2018]
      */
     public function get_lead($type) {
-        // pr($this->input->get('txt_strattec_part'));
-        // pr($this->input->get('txt_status'));
 
+        $columns = ['note','firstname','lastname','email'];
+        $keyword = $this->input->get('search');
+//
+        if (!empty($keyword['value'])) {
+            $where = '(firstname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR lastname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR email LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR note LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')';
+            $this->db->where($where);
+        }
 
-//        $columns = ['','c.name','m.name','t.notes','t.modified_date',''];
-//        $keyword = $this->input->get('search');
-//        $this->db->select('t.*,c.name as make_name,m.name as model_name,y.name as year_name');
-//        $this->db->where(array(
-//            't.is_delete' => 0,
-//            'm.is_delete' => 0,
-//            'c.is_delete' => 0
-//        ));
-//
-//        if(!empty($this->input->get('txt_strattec_part'))){
-//            $this->db->where('i.part_no', $this->input->get('txt_strattec_part'));
-//        }
-//
-//        if(!empty($this->input->get('txt_status')) && $this->input->get('txt_status') != 'all'){
-//             $this->db->where('t.status',$this->input->get('txt_status'));
-//        }
-//
-//        if (!empty($keyword['value'])) {
-//            $where = '(c.name LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR m.name LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR y.name LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR t.notes LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR DATE_FORMAT(t.modified_date, "%m-%d-%Y %I:%i %p") LIKE "%' . $keyword['value'] . '%")';
-//            $this->db->where($where);
-//        }
-//
-//        $this->db->join(TBL_COMPANY.' as c','t.make_id=c.id','left');
-//        $this->db->join(TBL_MODEL.' as m','t.model_id=m.id','left');
-//        $this->db->join(TBL_YEAR.' as y','t.year_id=y.id','left');
-//        $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
+        $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
         if ($type == 'count') {
         	
-            $query = $this->db->get(TBL_LEAD . ' t');
+            $query = $this->db->get(TBL_LEAD);
             return $query->num_rows();
         } else {
             $this->db->limit($this->input->get('length'), $this->input->get('start'));
-            $query = $this->db->get(TBL_LEAD . ' t');
+            $query = $this->db->get(TBL_LEAD);
             return $query;
         }
     }

@@ -52,8 +52,8 @@ $('.datatable-basic').dataTable({
             data: "action",
             render: function (data, type, full, meta) {
                 action = '';
-                    action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/lead/edit/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" title="Edit">Edit</a>';
-                    action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/lead/delete/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this)" title="Delete">Delete</a>';
+                    action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/products/edit/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" title="Edit">Edit</a>';
+                    action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/products/delete/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this)" title="Delete">Delete</a>';
                 return action;
             },
             sortable: false,
@@ -77,7 +77,7 @@ $('.dataTables_length select').select2({
 });
 $('.dataTables_filter input[type=search]').attr('placeholder', 'Type to filter...');
 if (user_type == 1 || user_type == 2 || user_type == 3) {
-    var add_button = '<div class="text-right add_action_button"><a href="' + site_url + 'admin/lead/add" class="btn bg-teal-400 btn-labeled custom_add_button  mt-2"><b><i class="icon-plus-circle2"></i></b> Add Lead</a></div>';
+    var add_button = '<div class="text-right add_action_button"><a href="' + site_url + 'admin/products/add" class="btn bg-teal-400 btn-labeled custom_add_button  mt-2"><b><i class="icon-plus-circle2"></i></b> Add Products</a></div>';
     $('.datatable-header').append(add_button);
 }
 /**********************************************************

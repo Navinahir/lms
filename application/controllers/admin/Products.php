@@ -2,16 +2,16 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Lead extends MY_Controller {
+class Products extends MY_Controller {
 
-    public function __construct() {
-        parent::__construct();
-        $this->load->model(array('admin/lead_model'));
-    }
+	public function __construct() {
+		parent::__construct();
+		$this->load->model(array('admin/lead_model'));
+	}
 
-    /**********************************************
-      Manage Lead
-    ***********************************************/
+	/**********************************************
+	Manage Products
+	 ***********************************************/
 
 	/**
 	 * This is default function
@@ -23,22 +23,22 @@ class Lead extends MY_Controller {
 			$this->session->set_flashdata('error', 'Please login to continue!');
 			redirect(base_url(), 'refresh');
 		}
-		$data['title'] = 'Lead Management';
+		$data['title'] = 'Products Management';
 //		$data['companyArr'] = $this->dashboard_model->get_all_details(TBL_COMPANY, array('is_delete' => 0, 'status' => 'active'),array(array('field' => 'name', 'type' => 'asc')))->result_array();
 //		$data['yearArr'] = $this->dashboard_model->get_all_details(TBL_YEAR, array('is_delete' => 0))->result_array();
 //		$this->template->load('default', 'login/dashboard', $data);
-		$this->template->load('default', 'admin/lead/lead_display',$data);
+		$this->template->load('default', 'admin/products/products_display',$data);
 	}
 
 	/**
-	 * Add Lead
+	 * Add Products
 	 * @param --
 	 * @return --
 	 * @author PAV [Last Edited : 03/02/2018]
 	 */
-	public function add_lead() {
+	public function add_products() {
 //		controller_validation();
-		$data['title'] = 'Admin | Add Lead';
+		$data['title'] = 'Admin | Add Products';
 //		$data['companyArr'] = $companyArr = $this->product_model->get_all_details(TBL_COMPANY, array('is_delete' => 0), array(array('field' => 'name', 'type' => 'ASC')))->result_array();
 //		$data['yearArr'] = $yearArr = $this->product_model->get_all_details(TBL_YEAR, array('is_delete' => 0), array(array('field' => 'name', 'type' => 'ASC')))->result_array();
 //		$data['itemArr'] = $itemArr = $this->inventory_model->get_item_details()->result_array();
@@ -65,17 +65,17 @@ class Lead extends MY_Controller {
 			} else {
 				$this->session->set_flashdata('error', 'Something went wrong! Please try again.');
 			}
-			redirect('admin/lead/');
+			redirect('admin/products/');
 		}
-		$this->template->load('default', 'admin/lead/lead_add', $data);
+		$this->template->load('default', 'admin/products/products_add', $data);
 	}
 
 	/**
-	 * Get Lead data by ajax and displaying in datatable while displaying
+	 * Get Products data by ajax and displaying in datatable while displaying
 	 * @param --
 	 * @return Object (Json Format)
 	 */
-	public function get_lead() {
+	public function get_products() {
 		$final['recordsTotal'] = $this->lead_model->get_lead('count');
 		$final['redraw'] = 1;
 		$final['recordsFiltered'] = $final['recordsTotal'];
@@ -91,7 +91,7 @@ class Lead extends MY_Controller {
 	 * @return --
 	 * @author PAV [Last Edited : 03/02/2018]
 	 */
-	public function edit_lead($id = '') {
+	public function edit_products($id = '') {
 		controller_validation();
 		$record_id = base64_decode($id);
 		$dataArr = $this->lead_model->get_all_details(TBL_LEAD, array('id' => $record_id))->row_array();
@@ -116,14 +116,14 @@ class Lead extends MY_Controller {
 			$insert_id = $this->lead_model->insert_update('update', TBL_LEAD, $updateArr, array('id' => $record_id));
 
 			$this->session->set_flashdata('success', 'Data has been updated successfully.');
-			redirect('admin/lead/');
+			redirect('admin/products/');
 		}
 		$data = array(
 			'title' => 'Edit Transponder',
 			'dataArr' => $dataArr,
 			'record_id' => $record_id
 		);
-		$this->template->load('default', 'admin/lead/lead_add', $data);
+		$this->template->load('default', 'admin/products/products_add', $data);
 	}
 
 	/**
@@ -132,12 +132,12 @@ class Lead extends MY_Controller {
 	 * @return --
 	 * @author PAV [Last Edited : 03/02/2018]
 	 */
-	public function delete_lead($id = '') {
+	public function delete_products($id = '') {
 //		controller_validation();
 		$record_id = base64_decode($id);
 		$this->lead_model->insert_update('delete', TBL_LEAD, '', array('id' => $record_id));
 		$this->session->set_flashdata('error', 'Data data has been deleted successfully.');
-		redirect('admin/lead/');
+		redirect('admin/products/');
 	}
 
 
