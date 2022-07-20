@@ -76,7 +76,7 @@ $('.dataTables_length select').select2({
     width: 'auto'
 });
 $('.dataTables_filter input[type=search]').attr('placeholder', 'Type to filter...');
-if (user_type != 2) {
+if (user_type == 1 || user_type == 2) {
     var add_button = '<div class="text-right add_action_button"><a href="' + site_url + 'admin/lead/add" class="btn bg-teal-400 btn-labeled custom_add_button  mt-2"><b><i class="icon-plus-circle2"></i></b> Add Lead</a></div>';
     $('.datatable-header').append(add_button);
 }
