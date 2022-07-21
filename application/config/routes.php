@@ -248,9 +248,13 @@ $route['admin/users/add'] = 'admin/users/add_users';
 $route['admin/users/edit/(:any)'] = 'admin/users/edit_users/$1';
 $route['admin/users/delete/(:any)'] = 'admin/users/delete_users/$1';
 
-$route['admin/products/add'] = 'admin/products/add_products';
-$route['admin/products/edit/(:any)'] = 'admin/products/edit_products/$1';
-$route['admin/products/delete/(:any)'] = 'admin/products/delete_products/$1';
+$route['admin/categories/add'] = 'admin/categories/add_categories';
+$route['admin/categories/edit/(:any)'] = 'admin/categories/edit_categories/$1';
+$route['admin/categories/delete/(:any)'] = 'admin/categories/delete_categories/$1';
+
+$route['admin/project/add'] = 'admin/project/add_project';
+$route['admin/project/edit/(:any)'] = 'admin/project/edit_project/$1';
+$route['admin/project/delete/(:any)'] = 'admin/project/delete_project/$1';
 
 // Administrator
 $route['admin/product/make'] = 'admin/product/manage_make';

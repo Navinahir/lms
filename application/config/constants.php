@@ -152,6 +152,8 @@ define('TBL_TAXES', 'taxes');
 define('TBL_TERMS_AND_PRIVACY_POLICIES', 'terms_and_privacy_policies');
 define('TBL_TRANSPONDER', 'transponder');
 define('TBL_LEAD', 'lead');
+define('TBL_CATEGORIES', 'categories');
+define('TBL_PROJECT', 'project');
 define('TBL_TRANSPONDER_ADDITIONAL', 'transponder_additional');
 define('TBL_TRANSPONDER_ITEMS', 'transponder_items');
 define('TBL_TRANSPONDER_USER_ITEMS', 'transponder_user_items');

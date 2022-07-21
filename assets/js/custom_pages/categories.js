@@ -24,7 +24,7 @@ $('.datatable-basic').dataTable({
     },
     dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
     order: [[1, "asc"]],
-    ajax: site_url + 'admin/lead/get_lead',
+    ajax: site_url + 'admin/categories/get_categories',
     responsive: {
         details: {
             type: 'column',
@@ -32,28 +32,21 @@ $('.datatable-basic').dataTable({
         }
     },
     columns: [
-        {
-            data: "firstname",
-            visible: true,
-        },
-        {
-            data: "lastname",
-            visible: true,
-        },
 		{
-            data: "email",
-            visible: true,
-        },
-        {
-            data: "note",
-            visible: true,
-        },
+			data: "sr_no",
+			visible: true,
+			sortable: false,
+		},
+		{
+			data: "name",
+			visible: true,
+		},
         {
             data: "action",
             render: function (data, type, full, meta) {
                 action = '';
-                    action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/products/edit/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" title="Edit">Edit</a>';
-                    action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/products/delete/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this)" title="Delete">Delete</a>';
+                    action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/categories/edit/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" title="Edit">Edit</a>';
+                    action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/categories/delete/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this)" title="Delete">Delete</a>';
                 return action;
             },
             sortable: false,
@@ -76,8 +69,8 @@ $('.dataTables_length select').select2({
     width: 'auto'
 });
 $('.dataTables_filter input[type=search]').attr('placeholder', 'Type to filter...');
-if (user_type == 1 || user_type == 2 || user_type == 3) {
-    var add_button = '<div class="text-right add_action_button"><a href="' + site_url + 'admin/products/add" class="btn bg-teal-400 btn-labeled custom_add_button  mt-2"><b><i class="icon-plus-circle2"></i></b> Add Products</a></div>';
+if (user_type == 1) {
+    var add_button = '<div class="text-right add_action_button"><a href="' + site_url + 'admin/categories/add" class="btn bg-teal-400 btn-labeled custom_add_button  mt-2"><b><i class="icon-plus-circle2"></i></b> Add Categories</a></div>';
     $('.datatable-header').append(add_button);
 }
 /**********************************************************
@@ -437,94 +430,4 @@ $(document).on('click', '.btn_add_extra_field', function () {
 
 $(document).on('click', '.btn_remove_extra_field', function () {
     $(this).parents('tr').remove();
-});
-
-
-/*****************************************************************************
- Bulk edit
- ******************************************************************************/
-var app_id = [];
-$(document).on('change', '.bulk_edit_checkbox', function (e) {
-    if ($(this).parent('.checked').length == 1) {
-        app_id.push($(this).val());
-    } else {
-        app_id.splice($.inArray($(this).val(), app_id), 1);
-    }
-    var total_checked = $('.bulk_edit_checkbox').parent('.checked').length;
-    if (total_checked > 0) {
-        if ($('.custom_bulk_edit_button').length == 0) {
-            var edit_button = '<a href="javascript:void(0)" class="btn bg-primary-400 btn-labeled custom_bulk_edit_button mt-2" style="margin-left:10px"><b><i class="icon-pencil7"></i></b> Bulk Edit</a>';
-            $('.add_action_button').append(edit_button);
-        }
-    } else {
-        $('.custom_bulk_edit_button').remove();
-    }
-});
-
-
-$(document).on('change', '#txt_column_name', function () {
-    if ($(this).val() != '') {
-        option = ($(this).val()).replace('_', ' ');
-        if (option == 'iico') {
-            option = 'IIco';
-        } else {
-            option = option.toLowerCase().replace(/\b[a-z]/g, function (letter) {
-                return letter.toUpperCase();
-            });
-        }
-        var html = '<tr>';
-        html += '<th style="width:8%;background-color:#d6645e;color:#fff;cursor:pointer" data-id="' + $(this).val() + '" class="btn_remove_bulk_field"><i class="icon-close2"></i></th>';
-        html += '<th style="width:40%">' + option + '<input type="hidden" class="form-control txt_new_column" name="txt_new_column[]" value="' + $(this).val() + '"></th>';
-        html += '<th style="width:52%"><input type="text" class="form-control txt_new_value" name="txt_new_value[]" placeholder="Value" value=""></th>';
-        html += '</tr>';
-        $('#tbl_bulk_new_data thead').append(html);
-        $('#' + $(this).val()).prop('disabled', 'disabled');
-        $('#txt_column_name').select2();
-    }
-});
-
-$(document).on('click', '.btn_submit_bulk', function () {
-    $('#bulk_edit_form').submit();
-});
-
-$(document).on('change', '.tools', function () {
-    var id = $(this).find('input[type="checkbox"]').val();
-
-    if ($(this).find('input[type="checkbox"]').parent().hasClass('checked')) {
-        var html = '<div class="col-md-6 tool_div" id="div_' + id + '">' +
-                '<div class="panel panel-primary panel-bordered">' +
-                '<div class="panel-heading">' +
-                '<h6 class="panel-title">' + $(this).text() + '</h6>' +
-                '</div>' +
-                '<div class="panel-body">' +
-                '<input type="hidden" name="txt_tools[]" value="'+id+'" />' +
-                '<textarea placeholder="Place to add addtional details and instructions" name="tool_details[]" class="wysihtml5 wysihtml5-default form-control tool_textarea" rows="4" id="tool_textarea_' + id + '"></textarea>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
-        
-        setTimeout(function () {
-            $('#tool_textarea_' + id).wysihtml5({
-                parserRules: wysihtml5ParserRules
-            });
-        }, 100);
-        $('.tool_details').append(html);
-    } else {
-        $('#div_' + id).remove();
-    }
-});
-
-
-$(function () {
-    $('.wysihtml5-default').wysihtml5({
-        parserRules: wysihtml5ParserRules
-    });
-});
-
-$(document).on('click','.custom_cancel_button',function(){
-    $("#txt_modal_make_name").val('');
-    $("#txt_modal_model_name").val('');
-    $("#txt_modal_make_name2").val('').trigger('change')
-    validator_make.resetForm();
-    validator_model.resetForm();
 });

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Lead_model extends MY_Model {
+class Categories_model extends MY_Model {
 
     /**
      * It will get all the records of transponder for ajax datatable
@@ -9,28 +9,28 @@ class Lead_model extends MY_Model {
      * @return : Object
      * @author PAV [Last Edited : 03/02/2018]
      */
-    public function get_lead($type) {
+    public function get_categories($type) {
 
-        $columns = ['note','firstname','lastname','email'];
+        $columns = ['createdon','name'];
         $keyword = $this->input->get('search');
 //
         if (!empty($keyword['value'])) {
-            $where = '(firstname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR lastname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR email LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR note LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')';
+            $where = '(name LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')';
             $this->db->where($where);
         }
 
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
         if ($type == 'count') {
         	
-            $query = $this->db->get(TBL_LEAD);
+            $query = $this->db->get(TBL_CATEGORIES);
             return $query->num_rows();
         } else {
             $this->db->limit($this->input->get('length'), $this->input->get('start'));
-            $query = $this->db->get(TBL_LEAD);
+            $query = $this->db->get(TBL_CATEGORIES);
             return $query;
         }
     }
 }
 
-/* End of file lead_model.php */
-/* Location: ./application/models/lead_model.php */
+/* End of file Categories_model.php */
+/* Location: ./application/models/Categories_model.php */

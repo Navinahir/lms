@@ -7,7 +7,7 @@
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li><a href="<?php echo site_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i> Home</a></li>
-            <li class="active">Products data</li>
+            <li class="active">Project data</li>
         </ul>
     </div>
 </div>
@@ -19,10 +19,8 @@
                 <table class="table datatable-basic">
                     <thead>
                         <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Email</th>
-                            <th>Notes</th>
+                            <th>No</th>
+                            <th>Name</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -55,7 +53,7 @@
         remoteURL = site_url + "admin/product/checkUnique_Company_Name";
     }
 </script>
-<script type="text/javascript" src="assets/js/custom_pages/products.js?version='<?php echo time();?>'"></script>
+<script type="text/javascript" src="assets/js/custom_pages/project.js?version='<?php echo time();?>'"></script>
 <style>
     .dataTables_length{ float:left; }
     .modal-open{ padding-right:3px !important; }
