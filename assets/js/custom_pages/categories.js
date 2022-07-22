@@ -20,7 +20,7 @@ $('.datatable-basic').dataTable({
         search: '<span>Filter:</span> _INPUT_',
         lengthMenu: '<span>Show:</span> _MENU_',
         paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'},
-        emptyTable: 'No lead currently available.'
+        emptyTable: 'No categories currently available.'
     },
     dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
     order: [[1, "asc"]],
