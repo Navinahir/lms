@@ -24,7 +24,6 @@ class Project extends MY_Controller {
 			redirect(base_url(), 'refresh');
 		}
 		$data['title'] = 'Project Management';
-//		$data['companyArr'] = $this->dashboard_model->get_all_details(TBL_COMPANY, array('is_delete' => 0, 'status' => 'active'),array(array('field' => 'name', 'type' => 'asc')))->result_array();
 //		$data['yearArr'] = $this->dashboard_model->get_all_details(TBL_YEAR, array('is_delete' => 0))->result_array();
 //		$this->template->load('default', 'login/dashboard', $data);
 		$this->template->load('default', 'admin/project/project_display',$data);
@@ -39,10 +38,26 @@ class Project extends MY_Controller {
 	public function add_project() {
 //		controller_validation();
 		$data['title'] = 'Admin | Add Project';
-		$this->form_validation->set_rules('name', 'Categoriesname', 'trim|required');
+		$data['categories'] = $categories = $this->categories_model->get_all_categories();
+		$this->form_validation->set_rules('category', 'Categoriesname', 'trim|required');
 		if ($this->form_validation->run() == true) {
 			$insertArr = array(
-				'name' => htmlentities($this->input->post('name')),
+				'category' => htmlentities($this->input->post('category')),
+				'system_size' => htmlentities($this->input->post('system_size')),
+				'brand' => htmlentities($this->input->post('brand')),
+				'warranties' => htmlentities($this->input->post('warranties')),
+				'mounting' => htmlentities($this->input->post('mounting')),
+				'electric_kit' => htmlentities($this->input->post('electric_kit')),
+				'export_limit' => htmlentities($this->input->post('export_limit')),
+				'house_type' => htmlentities($this->input->post('house_type')),
+				'roof_type' => htmlentities($this->input->post('roof_type')),
+				'roof_angle' => htmlentities($this->input->post('roof_angle')),
+				'basic_system_cost' => htmlentities($this->input->post('basic_system_cost')),
+				'special_discount' => htmlentities($this->input->post('special_discount')),
+				'other_price' => htmlentities($this->input->post('other_price')),
+				'balance_due' => htmlentities($this->input->post('balance_due')),
+				'special_note' => htmlentities($this->input->post('special_note')),
+				'project_note' => htmlentities($this->input->post('project_note'))
 			);
 			$insert_id = $this->project_model->insert_update('insert', TBL_PROJECT, $insertArr);
 
@@ -53,6 +68,9 @@ class Project extends MY_Controller {
 			}
 			redirect('admin/project/');
 		}
+		$data = array(
+			'title' => 'Add Project',
+			'categories' => $categories);
 		$this->template->load('default', 'admin/project/project_add', $data);
 	}
 

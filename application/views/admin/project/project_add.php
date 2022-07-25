@@ -48,9 +48,9 @@ if (isset($dataArr)) {
 										<label class="col-md-12 col-lg-3 lb-w-150 control-label">Category :</label>
 										<div class="col-md-12 col-lg-9 input-controlstyle-150">
 											<select class="select select-size-sm" id="category" name="category">
-												<option value="1" >category1</option>
-												<option value="2" >category2</option>
-												<option value="3" >category3</option>
+												<?php foreach ($categories as $k => $v) { ?>
+													<option value="<?php echo $v['id']; ?>"><?php echo $v['name']; ?></option>
+												<?php } ?>
 											</select>
 										</div>
 									</div>

@@ -30,6 +30,18 @@ class Categories_model extends MY_Model {
             return $query;
         }
     }
+	/**
+	 * Update User profile
+	 * @author PAV
+	 * @param integer user id
+	 * @return boolean
+	 */
+	public function get_all_categories() {
+		$this->db->select('*');
+		$this->db->from(TBL_CATEGORIES);
+		$res = $this->db->get();
+		return $res->result_array();
+	}
 }
 
 /* End of file Categories_model.php */
