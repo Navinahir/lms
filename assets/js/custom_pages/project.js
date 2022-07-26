@@ -38,7 +38,7 @@ $('.datatable-basic').dataTable({
 			sortable: false,
 		},
 		{
-			data: "name",
+			data: "system_size",
 			visible: true,
 		},
         {

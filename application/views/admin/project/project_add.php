@@ -49,7 +49,7 @@ if (isset($dataArr)) {
 										<div class="col-md-12 col-lg-9 input-controlstyle-150">
 											<select class="select select-size-sm" id="category" name="category">
 												<?php foreach ($categories as $k => $v) { ?>
-													<option value="<?php echo $v['id']; ?>"><?php echo $v['name']; ?></option>
+													<option value="<?php echo $v['id']; ?>" <?php if ( isset($dataArr['category']) && $dataArr['category'] == $v['id']) { echo "selected"; }?> ><?php echo $v['name']; ?></option>
 												<?php } ?>
 											</select>
 										</div>

@@ -55,6 +55,7 @@ class Project extends MY_Controller {
 				'basic_system_cost' => htmlentities($this->input->post('basic_system_cost')),
 				'special_discount' => htmlentities($this->input->post('special_discount')),
 				'other_price' => htmlentities($this->input->post('other_price')),
+				'deposit_required' => htmlentities($this->input->post('deposit_required')),
 				'balance_due' => htmlentities($this->input->post('balance_due')),
 				'special_note' => htmlentities($this->input->post('special_note')),
 				'project_note' => htmlentities($this->input->post('project_note'))
@@ -103,15 +104,31 @@ class Project extends MY_Controller {
 		controller_validation();
 		$record_id = base64_decode($id);
 		$dataArr = $this->project_model->get_all_details(TBL_PROJECT, array('id' => $record_id))->row_array();
-
-		$this->form_validation->set_rules('name', 'projectname', 'trim|required');
+		$data['categories'] = $categories = $this->categories_model->get_all_categories();
+		$this->form_validation->set_rules('system_size', 'SystemSize', 'trim|required');
 
 		if ($this->form_validation->run() == true) {
 			$updateArr = array(
-				'name' => htmlentities($this->input->post('name')),
+				'category' => htmlentities($this->input->post('category')),
+				'system_size' => htmlentities($this->input->post('system_size')),
+				'brand' => htmlentities($this->input->post('brand')),
+				'warranties' => htmlentities($this->input->post('warranties')),
+				'mounting' => htmlentities($this->input->post('mounting')),
+				'electric_kit' => htmlentities($this->input->post('electric_kit')),
+				'export_limit' => htmlentities($this->input->post('export_limit')),
+				'house_type' => htmlentities($this->input->post('house_type')),
+				'roof_type' => htmlentities($this->input->post('roof_type')),
+				'roof_angle' => htmlentities($this->input->post('roof_angle')),
+				'basic_system_cost' => htmlentities($this->input->post('basic_system_cost')),
+				'special_discount' => htmlentities($this->input->post('special_discount')),
+				'other_price' => htmlentities($this->input->post('other_price')),
+				'deposit_required' => htmlentities($this->input->post('deposit_required')),
+				'balance_due' => htmlentities($this->input->post('balance_due')),
+				'special_note' => htmlentities($this->input->post('special_note')),
+				'project_note' => htmlentities($this->input->post('project_note'))
 			);
 
-			$insert_id = $this->project_model->insert_update('update', TBL_PROJECT, $updateArr, array('id' => $record_id));
+			$this->project_model->insert_update('update', TBL_PROJECT, $updateArr, array('id' => $record_id));
 
 			$this->session->set_flashdata('success', 'Data has been updated successfully.');
 			redirect('admin/project/');
@@ -119,7 +136,8 @@ class Project extends MY_Controller {
 		$data = array(
 			'title' => 'Edit project',
 			'dataArr' => $dataArr,
-			'record_id' => $record_id
+			'record_id' => $record_id,
+			'categories' => $categories
 		);
 		$this->template->load('default', 'admin/project/project_add', $data);
 	}
