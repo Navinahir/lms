@@ -73,7 +73,7 @@
                     <div class="col-md-12">
                         <div class="panel panel-flat">
                             <div class="panel-body">
-                                <form method="post" class="form-horizontal" id="userProfileForm" name="userProfileForm" action="<?php echo site_url('admin/profile'); ?>">
+                                <form method="post" class="form-horizontal" id="userProfileForm" name="userProfileForm" action="<?php echo site_url('admin/profile'); ?>" enctype="multipart/form-data">
                                     <div class="tabbable tab-content-bordered">
                                         <ul class="nav nav-tabs nav-tabs-highlight">
                                             <li class="active"><a href="#bordered-tab1" data-toggle="tab"><b>Profile Details</b></a></li>
@@ -99,6 +99,35 @@
                                                         <input type="text" class="form-control format-phone-number" name="phone" id="phone" placeholder="Enter Phone" value="<?php echo $this->session->userdata('phone'); ?>">
                                                     </div>
                                                 </div>
+												<div class="form-group">
+													<label class="control-label col-lg-2">Image :</label>
+													<div class="col-lg-10">
+														<div class="media no-margin-top">
+															<div class="media-left" id="image_preview_div">
+																<?php
+																if ( $this->session->userdata('profile') != '' && file_exists(ITEMS_IMAGE_PATH . '/' . $this->session->userdata('profile'))) {
+																	$required = '';
+																	?>
+																	<img src="<?php echo ITEMS_IMAGE_PATH . '/' . $this->session->userdata('profile') ?>" style="width: 58px; height: 58px; border-radius: 2px;" alt="">
+																	<?php
+																} else {
+																	$required = 'required';
+																	?>
+																	<img src="assets/images/placeholder.jpg" style="width: 58px; height: 58px; border-radius: 2px;" alt="">
+																<?php } ?>
+															</div>
+															<div class="media-body">
+																<input type="file" name="image_link" id="image_link" class="file-styled" onchange="readURL(this);">
+																<span class="help-block">Accepted formats: png, jpg. Max file size 2Mb</span>
+																<span id="image_message_alert" style="color: red;"></span>
+															</div>
+														</div>
+														<?php
+														if (isset($menu_item_image_validation))
+															echo '<label id="image_link-error" class="validation-error-label" for="image_link">' . $item_image_validation . '</label>';
+														?>
+													</div>
+												</div>
                                                 <div class="form-group">
                                                     <div class="col-lg-10 col-lg-offset-2 form-btn">
                                                         <button type="submit" class="btn bg-blue custom_save_button" style="letter-spacing: 1px;text-transform: uppercase;font-weight: 500;">Update</button>

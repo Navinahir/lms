@@ -2,14 +2,14 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once FCPATH . '/Library/QuickBook/autoload.php';
-use QuickBooksOnline\API\DataService\DataService;
-use QuickBooksOnline\API\Core\Http\Serialization\XmlObjectSerializer;
-use QuickBooksOnline\API\Facades\Customer;
-use QuickBooksOnline\API\Facades\Item;
-use QuickBooksOnline\API\Data\IPPReferenceType;
-use QuickBooksOnline\API\Data\IPPAttachableRef;
-use QuickBooksOnline\API\Data\IPPAttachable;
+//require_once FCPATH . '/Library/QuickBook/autoload.php';
+//use QuickBooksOnline\API\DataService\DataService;
+//use QuickBooksOnline\API\Core\Http\Serialization\XmlObjectSerializer;
+//use QuickBooksOnline\API\Facades\Customer;
+//use QuickBooksOnline\API\Facades\Item;
+//use QuickBooksOnline\API\Data\IPPReferenceType;
+//use QuickBooksOnline\API\Data\IPPAttachableRef;
+//use QuickBooksOnline\API\Data\IPPAttachable;
 class MY_Controller extends CI_Controller {
 
     static $access_method = array();

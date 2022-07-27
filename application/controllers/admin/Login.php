@@ -72,6 +72,7 @@ class Login extends MY_Controller {
                 $ssn_data['user_role'] = $data['user_role'];
                 $ssn_data['email_id'] = $data['email_id'];
                 $ssn_data['phone'] = $data['contact_number'];
+				$ssn_data['profile'] = $data['profile_pic'];
                 $ssn_data['logged_in'] = 1;
 
                 $this->session->set_userdata($ssn_data);
@@ -97,6 +98,7 @@ class Login extends MY_Controller {
                         $ssn_data['user_role'] = $data['user_role'];
                         $ssn_data['email_id'] = $data['email_id'];
                         $ssn_data['phone'] = $data['contact_number'];
+                        $ssn_data['profile'] = $data['profile_pic'];
                         $ssn_data['logged_in'] = 1;
 
                         $this->session->set_userdata($ssn_data);
@@ -232,29 +234,62 @@ class Login extends MY_Controller {
         $data['profile_details'] = $profile_details = $this->users_model->get_user_profile($this->session->userdata('user_id'));
         //die;
         if ($this->input->post()) {
-            $updateArr = array(
-                'first_name' => $this->input->post('firstname'),
-                'last_name' => $this->input->post('lastname'),
-                'contact_number' => $this->input->post('phone')
-            );
-            if ($this->input->post('password') != '' && ($this->input->post('password') == $this->input->post('cpassword'))) {
-                $password_encrypt_key = bin2hex(openssl_random_pseudo_bytes(6, $cstrong));
-                $algo = $password_encrypt_key . $this->input->post('password') . $password_encrypt_key;
-                $encrypted_pass = hash('sha256', $algo);
-                $updateArr['password'] = $encrypted_pass;
-                $updateArr['password_encrypt_key'] = $password_encrypt_key;
-            }
-            $update_profile = $this->users_model->insert_update('update', TBL_USERS, $updateArr, array('id' => $this->session->userdata('user_id')));
-            $ssn_data = array();
-            $ssn_data['user_id'] = $profile_details['id'];
-            $ssn_data['first_name'] = $this->input->post('firstname');
-            $ssn_data['last_name'] = $this->input->post('lastname');
-            $ssn_data['user_role'] = $profile_details['user_role'];
-            $ssn_data['phone'] = $this->input->post('phone');
-            $ssn_data['logged_in'] = 1;
-            $this->session->set_userdata($ssn_data);
-            $this->session->set_flashdata('success', 'Profile updated successfully!');
-            redirect('admin/profile');
+			$profile_pic = '';
+			if ($_FILES['image_link']['name'] != '') {
+				$img_array = array('png', 'jpeg', 'jpg', 'PNG', 'JPEG', 'JPG');
+				$exts = explode(".", $_FILES['image_link']['name']);
+				$name = time() . "." . end($exts);
+
+				$config['upload_path'] = ITEMS_IMAGE_PATH;
+				$config['allowed_types'] = implode("|", $img_array);
+				$config['max_size'] = '2048';
+				$config['file_name'] = $name;
+
+				$this->upload->initialize($config);
+				if (($_FILES['image_link']['size'] > 2097152)) {
+					$message = 'File too large. File must be less than 2 megabytes.';
+					$this->session->set_flashdata('error', $message);
+					redirect('admin/inventory/items');
+				} else {
+
+					if (!$this->upload->do_upload('image_link')) {
+						$flag = 1;
+						$data['item_image_validation'] = $this->upload->display_errors();
+					} else {
+						echo "asd";
+						$file_info = $this->upload->data();
+						$profile_pic = $file_info['file_name'];
+					}
+				}
+			}
+			if ($flag != 1) {
+				$updateArr = array(
+					'first_name' => $this->input->post('firstname'),
+					'last_name' => $this->input->post('lastname'),
+					'profile_pic' => $profile_pic,
+					'contact_number' => $this->input->post('phone')
+				);
+				if ($this->input->post('password') != '' && ($this->input->post('password') == $this->input->post('cpassword'))) {
+					$password_encrypt_key = bin2hex(openssl_random_pseudo_bytes(6, $cstrong));
+					$algo = $password_encrypt_key . $this->input->post('password') . $password_encrypt_key;
+					$encrypted_pass = hash('sha256', $algo);
+					$updateArr['password'] = $encrypted_pass;
+					$updateArr['password_encrypt_key'] = $password_encrypt_key;
+				}
+
+				$update_profile = $this->users_model->insert_update('update', TBL_USERS, $updateArr, array('id' => $this->session->userdata('user_id')));
+				$ssn_data = array();
+				$ssn_data['user_id'] = $profile_details['id'];
+				$ssn_data['first_name'] = $this->input->post('firstname');
+				$ssn_data['last_name'] = $this->input->post('lastname');
+				$ssn_data['user_role'] = $profile_details['user_role'];
+				$ssn_data['phone'] = $this->input->post('phone');
+				$ssn_data['profile'] = $profile_pic;
+				$ssn_data['logged_in'] = 1;
+				$this->session->set_userdata($ssn_data);
+				$this->session->set_flashdata('success', 'Profile updated successfully!');
+				redirect('admin/profile');
+			}
         }
         $this->template->load('default', 'login/profile', $data);
     }
