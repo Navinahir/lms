@@ -137,7 +137,7 @@
                         <div class="sidebar-user mobile-username">
                             <div class="category-content">
                                 <div class="media media_mobile">
-                                    <a class="media-left profile_img" href="JavaScript:Void(0);"><img src="assets/images/user_image.png" class="img-circle img-sm user-prfile-img" alt=""></a>
+                                    <a class="media-left profile_img" href="JavaScript:Void();"><img src="assets/images/user_image.png" class="img-circle img-sm user-prfile-img" alt=""></a>
                                     <div class="media-body user_profile" style="padding-top: 9px;">
                                         <span class="media-heading text-semibold"><?php echo strtoupper(checkLogin('U')); ?></span>
                                     </div>

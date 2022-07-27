@@ -256,7 +256,6 @@ class Login extends MY_Controller {
 						$flag = 1;
 						$data['item_image_validation'] = $this->upload->display_errors();
 					} else {
-						echo "asd";
 						$file_info = $this->upload->data();
 						$profile_pic = $file_info['file_name'];
 					}
