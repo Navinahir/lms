@@ -96,9 +96,11 @@ class Users_model extends MY_Model {
             $this->db->where($where);
         }
         $this->db->join(TBL_ROLES . ' as r', 'u.user_role = r.id', 'left');
-        $this->db->join(TBL_USERS . ' as bu', 'u.business_user_id = bu.id', 'left');
-        $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
+//        $this->db->join(TBL_USERS . ' as bu', 'u.business_user_id = bu.id', 'left');
 
+		if ( isset($columns[$this->input->get('order')[0]['column']]) ) {
+			$this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
+		}
         if ($type == 'count') {
             $query = $this->db->get(TBL_USERS . ' as u');
             return $query->num_rows();

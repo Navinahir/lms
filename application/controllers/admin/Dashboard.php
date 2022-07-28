@@ -6,7 +6,7 @@ class Dashboard extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(array('admin/dashboard_model', 'admin/product_model', 'admin/inventory_model'));
+        $this->load->model(array('admin/users_model','admin/dashboard_model','admin/lead_model', 'admin/product_model', 'admin/inventory_model'));
     }
 
     /**
@@ -23,6 +23,10 @@ class Dashboard extends MY_Controller {
         $data['title'] = 'Dashboard';
         $data['companyArr'] = $this->dashboard_model->get_all_details(TBL_COMPANY, array('is_delete' => 0, 'status' => 'active'),array(array('field' => 'name', 'type' => 'asc')))->result_array();
         $data['yearArr'] = $this->dashboard_model->get_all_details(TBL_YEAR, array('is_delete' => 0))->result_array();
+        $data['totalLead'] = $this->lead_model->get_lead('count');
+        $data['totalLead'] = $this->lead_model->get_lead('count');
+        $data['totalUsers'] = $this->users_model->get_ajax_data('count');
+//        echo "<pre>";print_r($data);die;
         $this->template->load('default', 'login/dashboard', $data);
     }
 

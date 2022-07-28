@@ -18,8 +18,11 @@ class Lead_model extends MY_Model {
             $where = '(firstname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR lastname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR email LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR note LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')';
             $this->db->where($where);
         }
-
-        $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
+		$col = isset($this->input->get('order')[0]['column']) ? $this->input->get('order')[0]['column']: '';
+		$dir = isset($this->input->get('order')[0]['dir']) ? $this->input->get('order')[0]['dir']: '';
+		if ( isset($columns[$col]) ) {
+			$this->db->order_by($columns[$col], $dir);
+		}
         if ($type == 'count') {
         	
             $query = $this->db->get(TBL_LEAD);
