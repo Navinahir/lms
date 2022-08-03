@@ -4,14 +4,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Lead extends MY_Controller {
 
-    public function __construct() {
-        parent::__construct();
-        $this->load->model(array('admin/lead_model'));
-    }
+	public function __construct() {
+		parent::__construct();
+		$this->load->model(array('admin/lead_model'));
+	}
 
-    /**********************************************
-      Manage Lead
-    ***********************************************/
+	/**********************************************
+	Manage Lead
+	 ***********************************************/
 
 	/**
 	 * This is default function
@@ -39,16 +39,15 @@ class Lead extends MY_Controller {
 	public function add_lead() {
 //		controller_validation();
 		$data['title'] = 'Admin | Add Lead';
-//		$data['companyArr'] = $companyArr = $this->product_model->get_all_details(TBL_COMPANY, array('is_delete' => 0), array(array('field' => 'name', 'type' => 'ASC')))->result_array();
-//		$data['yearArr'] = $yearArr = $this->product_model->get_all_details(TBL_YEAR, array('is_delete' => 0), array(array('field' => 'name', 'type' => 'ASC')))->result_array();
-//		$data['itemArr'] = $itemArr = $this->inventory_model->get_item_details()->result_array();
-//		$data['toolArr'] = $toolArr = $this->inventory_model->get_tool_details()->result_array();
+		$data['states'] =$states = $this->lead_model->get_all_details(TBL_STATES, array(''))->result_array();
+		$data['assign_sale_person'] = $assign_sale_person = $this->lead_model->get_all_details(TBL_USERS, array('user_role' => 2))->result_array();
 		$this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
 		$this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required');
 		if ($this->form_validation->run() == true) {
 			$insertArr = array(
 				'source' => htmlentities($this->input->post('source')),
+				'assign_user_id' => (htmlentities($this->input->post('assign_user_id')) > 0) ? htmlentities($this->input->post('assign_user_id')) : strtoupper(checkLogin('I')),
 				'firstname' => htmlentities($this->input->post('firstname')),
 				'lastname' => htmlentities($this->input->post('lastname')),
 				'email' => htmlentities($this->input->post('email')),
@@ -67,6 +66,12 @@ class Lead extends MY_Controller {
 			}
 			redirect('admin/lead/');
 		}
+		$data = array(
+			'title' => 'Add Lead',
+			'states' => $states,
+			'assign_sale_person' => $assign_sale_person
+		);
+
 		$this->template->load('default', 'admin/lead/lead_add', $data);
 	}
 
@@ -92,10 +97,11 @@ class Lead extends MY_Controller {
 	 * @author PAV [Last Edited : 03/02/2018]
 	 */
 	public function edit_lead($id = '') {
-		controller_validation();
+//		controller_validation();
 		$record_id = base64_decode($id);
 		$dataArr = $this->lead_model->get_all_details(TBL_LEAD, array('id' => $record_id))->row_array();
-
+		$data['states'] =$states = $this->lead_model->get_all_details(TBL_STATES, array(''))->result_array();
+		$data['assign_sale_person'] = $assign_sale_person = $this->lead_model->get_all_details(TBL_USERS, array('user_role' => 2))->result_array();
 		$this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
 		$this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required');
@@ -103,6 +109,7 @@ class Lead extends MY_Controller {
 		if ($this->form_validation->run() == true) {
 			$updateArr = array(
 				'source' => htmlentities($this->input->post('source')),
+				'assign_user_id' => (htmlentities($this->input->post('assign_user_id')) > 0) ? htmlentities($this->input->post('assign_user_id')) : strtoupper(checkLogin('I')),
 				'firstname' => htmlentities($this->input->post('firstname')),
 				'lastname' => htmlentities($this->input->post('lastname')),
 				'email' => htmlentities($this->input->post('email')),
@@ -119,9 +126,11 @@ class Lead extends MY_Controller {
 			redirect('admin/lead/');
 		}
 		$data = array(
-			'title' => 'Edit Transponder',
+			'title' => 'Edit Lead',
 			'dataArr' => $dataArr,
-			'record_id' => $record_id
+			'record_id' => $record_id,
+			'states' => $states,
+			'assign_sale_person' => $assign_sale_person
 		);
 		$this->template->load('default', 'admin/lead/lead_add', $data);
 	}

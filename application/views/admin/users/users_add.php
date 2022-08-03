@@ -142,9 +142,13 @@ if (isset($dataArr)) {
 										<label class="col-md-12 col-lg-3 lb-w-150 control-label">State :</label>
 										<div class="col-md-12 col-lg-9 input-controlstyle-150">
 											<select class="select select-size-sm" id="state_id" name="state_id">
-												<option value="1" >State1</option>
-												<option value="2" >State2</option>
-												<option value="3" >State3</option>
+												<?php
+												foreach ($states as $k => $v) { ?>
+													<option value="<?php echo $v['id']; ?>" <?php if ( isset($dataArr['state_id']) && $dataArr['state_id'] == $v['id']) { echo "selected"; } ?>><?php echo $v['name']; ?></option>
+													<?php
+												}
+												echo '<label id="state_id_error2" class="validation-error-label" for="state_id">' . form_error('state_id') . '</label>';
+												?>
 											</select>
 										</div>
 									</div>
